@@ -1,0 +1,7 @@
+﻿  Bilet.cpp
+  Client.cpp
+  Film.cpp
+  Sala.cpp
+C:\Users\Diana\Desktop\Recuperare\POO\Proiect\Proiect\Sala.cpp(120,20): warning C4834: discarding return value of function with 'nodiscard' attribute
+  Generating Code...
+  Proiect.vcxproj -> C:\Users\Diana\Desktop\Recuperare\POO\Proiect\x64\Debug\Proiect.exe
