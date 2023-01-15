@@ -1,7 +1,4 @@
-﻿  Bilet.cpp
-  Client.cpp
-  Film.cpp
-  Sala.cpp
-C:\Users\Diana\Desktop\Recuperare\POO\Proiect\Proiect\Sala.cpp(120,20): warning C4834: discarding return value of function with 'nodiscard' attribute
-  Generating Code...
-  Proiect.vcxproj -> C:\Users\Diana\Desktop\Recuperare\POO\Proiect\x64\Debug\Proiect.exe
+﻿  Source.cpp
+C:\Users\Diana\Desktop\Recuperare\POO\Proiect-POO\Proiect\Proiect\Sala.cpp(128,20): warning C4834: discarding return value of function with 'nodiscard' attribute
+C:\Users\Diana\Desktop\Recuperare\POO\Proiect-POO\Proiect\Proiect\Source.cpp(12,59): warning C4305: 'argument': truncation from 'double' to 'float'
+  Proiect.vcxproj -> C:\Users\Diana\Desktop\Recuperare\POO\Proiect-POO\Proiect\x64\Debug\Proiect.exe

@@ -86,17 +86,42 @@ public:
 			this->pret = pret;
 		}
 	}
-	friend ostream& operator<<(ostream&, Bilet);
-	friend istream& operator>>(istream&, Bilet&);
+	friend ostream& operator<<(ostream& out, Bilet b) {
+		out << "Data emitere: " << b.dataEmitere << endl;
+		out << "Ora film: " << b.oraFilm << endl;
+		out << "Cod film: " << b.codFilm << endl;
+		out << "Pret: " << b.pret << endl;
+		out << "Tip plata: " << b.tipPlata << endl;
+		out << "Rand: " << b.rand << endl;
+		out << "Loc: " << b.loc << endl;
+		return out;
+	}
+	friend istream& operator>>(istream& in, Bilet& b) {
+		cout << "Data emitere bilet: " << endl;
+		in >> b.dataEmitere;
+		cout << "Ora filmului: " << endl;
+		in >> b.oraFilm;
+		cout << "Codul filmului: " << endl;
+		in >> b.codFilm;
+		cout << "Pretul biletului: " << endl;
+		in >> b.pret;
+		cout << "Tipul platii (Cash/Card): " << endl;
+		in >> b.tipPlata;
+		cout << "Rand: " << endl;
+		in >> b.rand;
+		cout << "Loc: " << endl;
+		in >> b.loc;
+		return in;
+	}
 };
 //int Bilet::bileteEmise = 10;
-ostream& operator<<(ostream& out, Bilet b) {
-	out << "Data emitere: " << b.dataEmitere << endl;
-	out << "Ora film: " << b.oraFilm << endl;
-	out << "Cod film: " << b.codFilm << endl;
-	out << "Pret: " << b.pret << endl;
-	out << "Tip plata: " << b.tipPlata << endl;
-	out << "Rand: " << b.rand << endl;
-	out << "Loc: " << b.loc << endl;
-	return out;
-}
+//ostream& operator<<(ostream& out, Bilet b) {
+//	out << "Data emitere: " << b.dataEmitere << endl;
+//	out << "Ora film: " << b.oraFilm << endl;
+//	out << "Cod film: " << b.codFilm << endl;
+//	out << "Pret: " << b.pret << endl;
+//	out << "Tip plata: " << b.tipPlata << endl;
+//	out << "Rand: " << b.rand << endl;
+//	out << "Loc: " << b.loc << endl;
+//	return out;
+//}

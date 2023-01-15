@@ -6,7 +6,7 @@ class Client {
 	char* prenume;
 	string tipClient;
 	bool esteStudent;
-
+public:
 	//constructor default
 	Client():idClient(0) {
 		nume = nullptr;
@@ -15,11 +15,23 @@ class Client {
 		esteStudent = false;
 	}
 	//constructor cu parametri
-	Client(int idClient, char* nume, char* prenume, string tipClient, bool esteStudent) :idClient(idClient) {
-		this->nume = new char[strlen(nume) + 1];
-		strcpy_s(this->nume, strlen(nume) + 1, nume);
-		this->prenume = new char[strlen(prenume) + 1];
-		strcpy_s(this->prenume, strlen(prenume) + 1, prenume);
+	Client(int idClient, const char* nume, const char* prenume, string tipClient, bool esteStudent) :idClient(idClient) {
+		if (nume != nullptr) {
+			this->nume = new char[strlen(nume) + 1];
+			strcpy_s(this->nume, strlen(nume) + 1, nume);
+		}
+		else
+		{
+			this->nume = nullptr;
+		}
+		if (prenume != nullptr) {
+			this->prenume = new char[strlen(prenume) + 1];
+			strcpy_s(this->prenume, strlen(prenume) + 1, prenume);
+		}
+		else
+		{
+			this->prenume = nullptr;
+		}
 		this->tipClient = tipClient;
 		this->esteStudent = esteStudent;
 	}
@@ -126,22 +138,59 @@ class Client {
 		}
 	}
 
-	friend ostream& operator<<(ostream&, Client);
-	friend istream& operator>>(istream&, Client&);
+	friend ostream& operator<<(ostream& out, Client c) {
+		out << "Nume: ";
+		if (c.nume != nullptr) {
+			out << c.nume;
+		}
+		out << endl;
+		out << "Prenume: ";
+		if (c.prenume != nullptr) {
+			out << c.prenume;
+		}
+		out << endl;
+		out << "Tip client: " << c.tipClient << endl;
+		out << "Este student?: " << c.esteStudent << endl;
+		return out;
+	}
+	friend istream& operator>>(istream& in, Client& c) {
+		char buffer[100];
+		cout << "Nume client: " << endl;
+		in >> ws;
+		in.getline(buffer, 99);
+		if (c.nume != nullptr) {
+			delete[] c.nume;
+		}
+		c.nume = new char[strlen(buffer) + 1];
+		strcpy_s(c.nume, strlen(buffer) + 1, buffer);
+		cout << "Prenume client: " << endl;
+		in >> ws;
+		in.getline(buffer, 99);
+		if (c.prenume != nullptr) {
+			delete[] c.prenume;
+		}
+		c.prenume = new char[strlen(buffer) + 1];
+		strcpy_s(c.prenume, strlen(buffer) + 1, buffer);
+		cout << "Tipul clientului(Regular/VIP): " << endl;
+		in >> c.tipClient;
+		cout << "Este student?: " << endl;
+		in >> c.esteStudent;
+		return in;
+	}
 
 };
-ostream& operator<<(ostream& out, Client c) {
-	out << "Nume: ";
-	if (c.nume != nullptr) {
-		out << c.nume;
-	}
-	out << endl;
-	out << "Prenume: ";
-	if (c.prenume != nullptr) {
-		out << c.prenume;
-	}
-	out << endl;
-	out << "Tip client: " << c.tipClient << endl;
-	out << "Este student?: " << c.esteStudent << endl;
-	return out;
-}
+//ostream& operator<<(ostream& out, Client c) {
+//	out << "Nume: ";
+//	if (c.nume != nullptr) {
+//		out << c.nume;
+//	}
+//	out << endl;
+//	out << "Prenume: ";
+//	if (c.prenume != nullptr) {
+//		out << c.prenume;
+//	}
+//	out << endl;
+//	out << "Tip client: " << c.tipClient << endl;
+//	out << "Este student?: " << c.esteStudent << endl;
+//	return out;
+//}

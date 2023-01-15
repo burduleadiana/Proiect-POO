@@ -17,7 +17,7 @@ public:
 	}
 
 	//constructor cu parametri
-	Film(char* titlu, string gen, int durata, int frecventa) :idFilm(idFilm) {
+	Film(const char* titlu, string gen, int durata, int frecventa) :idFilm(idFilm) {
 		this->titlu = new char[strlen(titlu) + 1];
 		strcpy_s(this->titlu, strlen(titlu) + 1, titlu);
 		this->gen = gen;
@@ -85,24 +85,68 @@ public:
 			this->durata = 0;
 	}
 
+	//functie care mareste frecventa unui film pe saptamana
+	Film operator++(int i) {
+		Film copie = *this;
+		frecventa++;
+		return copie;
+	}
+
 	//destructor
 	~Film() {
 		if (titlu != nullptr) {
 			delete[] titlu;
 		}
 	}
-	friend ostream& operator<<(ostream&, Film);
-	friend istream& operator>>(istream&, Film&);
+	friend ostream& operator<<(ostream& out, Film f) {
+		out << "Titlu: ";
+		if (f.titlu != nullptr) {
+			out << f.titlu;
+		}
+		out << endl;
+		out << "Gen: " << f.gen << endl;
+		out << "Frecventa: " << f.frecventa << endl;
+		out << "Durata: " << f.durata << endl;
+		return out;
+	}
+	friend istream& operator>>(istream& in, Film& f) {
+			char buffer[100];
+			cout << "Titlul filmului: " << endl;
+			in >> ws;
+			in.getline(buffer, 99);
+			if (f.titlu != nullptr) {
+				delete[] f.titlu;
+			}
+			f.titlu = new char[strlen(buffer) + 1];
+			strcpy_s(f.titlu, strlen(buffer)+1, buffer);
+			cout << "Genul filmului: " << endl;
+			in >> f.gen;
+			cout << "Durata filmului: " << endl;
+			in >> f.durata;
+			cout << "Frecventa difuzarii: " << endl;
+			in >> f.frecventa;
+		
+			return in;
+	}
 	
 };
-ostream& operator<<(ostream& out, Film f) {
-	out << "Titlu: ";
-	if (f.titlu != nullptr) {
-		out << f.titlu;
-	}
-	out << endl;
-	out << "Gen: " << f.gen << endl;
-	out << "Frecventa: " << f.frecventa << endl;
-	out << "Durata: " << f.durata << endl;
-	return out;
-}
+
+
+//istream& operator>>(istream& in, Film& f) {
+//	string buffer;
+//	cout << "Titlul filmului: " << endl;
+//	in >> buffer;
+//	if (f.titlu != nullptr) {
+//		delete[] f.titlu;
+//	}
+//	f.titlu = new char[buffer.length() + 1];
+//	strcpy_s(f.titlu, buffer.length(), buffer.c_str());
+//	cout << "Genul filmului: " << endl;
+//	in >> f.gen;
+//	cout << "Durata filmului: " << endl;
+//	in >> f.durata;
+//	cout << "Frecventa difuzarii: " << endl;
+//	in >> f.frecventa;
+//
+//	return in;
+//}

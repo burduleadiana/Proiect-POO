@@ -16,9 +16,15 @@ public:
 		nrLocuri = 0;
 	}
 	//constructor cu parametri
-	Sala(int nrSala, char* numeSala, string tipSala,int* locuri, int nrLocuri) :nrSala(nrSala) {
-		this->numeSala = new char[strlen(numeSala) + 1];
-		strcpy_s(this->numeSala, strlen(numeSala) + 1, numeSala);
+	Sala(int nrSala, const char* numeSala, string tipSala,int* locuri, int nrLocuri) :nrSala(nrSala) {
+		if (numeSala != nullptr) {
+			this->numeSala = new char[strlen(numeSala) + 1];
+			strcpy_s(this->numeSala, strlen(numeSala) + 1, numeSala);
+		}
+		else
+		{
+			this->numeSala = nullptr;
+		}
 		this->tipSala = tipSala;
 		this->nrLocuri = nrLocuri;
 		if (locuri != nullptr) {
@@ -31,8 +37,8 @@ public:
 	//constructor de copiere
 	Sala(const Sala& s):nrSala(nrSala) {
 		if (s.numeSala != nullptr) {
-			this->numeSala = new char[strlen(s.numeSala)];
-			strcpy_s(this->numeSala, strlen(s.numeSala), s.numeSala);
+			this->numeSala = new char[strlen(s.numeSala)+1];
+			strcpy_s(this->numeSala, strlen(s.numeSala)+1, s.numeSala);
 		}
 		this->tipSala = s.tipSala;
 		this->nrLocuri = s.nrLocuri;
@@ -72,7 +78,9 @@ public:
 			return copy;
 		}
 		else
+		{
 			return nullptr;
+		}
 	}
 	string getTipSala() {
 		return tipSala;
@@ -129,22 +137,108 @@ public:
 		}
 	}
 
-	friend ostream& operator<<(ostream&, Sala);
-	friend istream& operator>>(istream&, Sala&);
-};
-ostream& operator<<(ostream& out, Sala s) {
-	out << "Nume sala: ";
-	if (s.numeSala != nullptr) {
-		out << s.numeSala;
-	}
-	out << endl;
-	out << "Tip sala: " << s.tipSala << endl;
-	out << "Numar locuri: " << s.nrLocuri << endl;
-	out << "Locuri: ";
-	if (s.locuri != nullptr) {
-		for (int i = 0; i < s.nrLocuri; i++) {
-			out << s.locuri[i] << " ";
+	friend ostream& operator<<(ostream& out, Sala s) {
+		out << "Nume sala: ";
+		if (s.numeSala != nullptr) {
+			out << s.numeSala;
 		}
+		else {
+			out << "N/A";
+		}
+		out << endl;
+		out << "Tip sala: " << s.tipSala << endl;
+		out << "Numar locuri: " << s.nrLocuri << endl;
+		out << "Locuri: ";
+		if (s.locuri != nullptr) {
+			for (int i = 0; i < s.nrLocuri; i++) {
+				out << s.locuri[i] << " ";
+			}
+		}
+		return out;
 	}
-	return out;
-}
+
+	friend istream& operator>>(istream& in, Sala& s) {
+			char buffer[100];
+			cout << "Denumire sala: " << endl;
+			in >> ws;
+			in.getline(buffer, 99);
+			if (s.numeSala != nullptr) {
+				delete[] s.numeSala;
+			}
+			s.numeSala = new char[strlen(buffer) + 1];
+			strcpy_s(s.numeSala, strlen(buffer) + 1, buffer);
+			cout << "Tipul salii: " << endl;
+			in >> s.tipSala;
+			cout << "Numar locuri/sala: " << endl;
+			in >> s.nrLocuri;
+			if (s.locuri != nullptr)
+			{
+				delete[] s.locuri;
+			}
+			if (s.nrLocuri > 0&&in.good())
+			{
+				s.locuri = new int[s.nrLocuri];
+				for (int i = 0; i < s.nrLocuri; i++)
+				{
+					cout << "Locul cu numarul" << i;
+					in >> s.locuri[i];
+				}
+			}
+			else
+			{
+				s.nrLocuri = 0;
+				s.locuri = nullptr;
+			}
+			return in;
+	}
+};
+//ostream& operator<<(ostream& out, Sala s) {
+//	out << "Nume sala: ";
+//	if (s.numeSala != nullptr) {
+//		out << s.numeSala;
+//	}
+//	out << endl;
+//	out << "Tip sala: " << s.tipSala << endl;
+//	out << "Numar locuri: " << s.nrLocuri << endl;
+//	out << "Locuri: ";
+//	if (s.locuri != nullptr) {
+//		for (int i = 0; i < s.nrLocuri; i++) {
+//			out << s.locuri[i] << " ";
+//		}
+//	}
+//	return out;
+//}
+//istream& operator>>(istream& in, Sala& f) {
+//	string buffer;
+//	cout << "Denumire sala: " << endl;
+//	in >> buffer;
+//	if (f.numeSala != nullptr) {
+//		delete[] f.numeSala;
+//	}
+//	f.numeSala = new char[buffer.length() + 1];
+//	strcpy_s(f.numeSala, buffer.length(), buffer.c_str());
+//	cout << "Tipul salii: " << endl;
+//	in >> f.tipSala;
+//	cout << "Numar locuri/sala: " << endl;
+//	in >> f.nrLocuri;
+//	if (f.locuri != nullptr)
+//	{
+//		delete[] f.locuri;
+//	}
+//	if (f.nrLocuri > 0)
+//	{
+//		f.locuri = new int[f.nrLocuri];
+//		for (int i = 0; i < f.nrLocuri; i++)
+//		{
+//			cout << "Locul cu numarul" << i;
+//			in >> f.locuri[i];
+//		}
+//	}
+//	else
+//	{
+//		f.nrLocuri = 0;
+//		f.locuri = nullptr;
+//	}
+//	return in;
+//
+//}
